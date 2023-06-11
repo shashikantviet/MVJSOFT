@@ -1,0 +1,154 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+    <apex:slds />
+    <html ng-app="SLDSApp" ng-controller="myCtrl" xmlns="SVG namespace" xmlns:xlink="XLink namespace">
+        <head>
+            <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js">
+                </script>
+            <!--<apex:stylesheet value="{!URLFOR($Resource.SLDS0122, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />-->
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.2/angular.min.js"></script>
+            <script src="https://rawgithub.com/angular-ui/ui-sortable/master/src/sortable.js"></script>
+            <style>
+                .active{
+                background-color:#F0FFFF;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="slds-scope">
+                <div class="slds-picklist--draggable slds-grid">
+                    <div class="slds-form-element">
+                        <span class="slds-form-element__label" aria-label="select-1">Multi Pick List</span>
+                        <div class="slds-picklist slds-picklist--multi">
+                            <ul ui-sortable="sortableOptions" ng-model="selectedValues" class="picklist slds-picklist__options slds-picklist__options--multi shown">
+                                <div ng-repeat="item in selectedValues" class="app" ng-class="{active: isActive(item)}">
+                                    <li id="po-0-0" class="slds-picklist__item" aria-selected="false" tabindex="0" role="option" ng-click="add($index);select(item)" ng-dblclick="add($index);addToDisplayArray();select(null)" >
+                                        <span class="slds-truncate">
+                                            <span>{{item}}</span>
+                                        </span>
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-grid--vertical">
+                        <button class="slds-button slds-button--icon-container">
+                            
+                            <span class="slds-assistive-text" >Arrow left</span>
+                        </button>
+                        <button class="slds-button slds-button--icon-container">
+                            
+                            <span class="slds-assistive-text" >Arrow right</span>
+                        </button>
+                    </div>
+                    <div class="slds-form-element">
+                        <span class="slds-form-element__label" aria-label="select-2">Resultant Values</span>
+                        <div class="slds-picklist slds-picklist--multi" >
+                            <ul ui-sortable="sortableOptions" ng-model="displayArray" class="picklist slds-picklist__options slds-picklist__options--multi shown">
+                                <div ng-repeat="item in displayArray" class="app" ng-class="{active: isActive(item)}">
+                                    <li id="po-0-0" class="slds-picklist__item" aria-selected="false" tabindex="0" role="option" ng-click="delete($index);select(item)" ng-dblclick="delete($index);deleteFromDisplayArray();select(null)">
+                                        <span class="slds-truncate">
+                                            <span class="items" >{{item}}</span>
+                                        </span>
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-grid--vertical">
+                        <button class="slds-button slds-button--icon-container" ng-click="up();select(null)">
+                            
+                            <span class="slds-assistive-text" >Arrow up</span>
+                        </button>
+                        <button class="slds-button slds-button--icon-container" ng-click="down();select(null)">
+                            
+                            <span class="slds-assistive-text" >Arrow down</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </body>
+    </html>
+    <script>
+    var app = angular.module('SLDSApp', ['ui.sortable']);
+    app.controller('myCtrl', ['$scope', function($scope) {
+        $scope.displayArray = [];
+        var deleted = null;
+        var selected = '';
+        var s = '';
+        var d = null;
+        var countForUp = null;
+        var countForDown = null;
+        var countForAdd = null;
+        var countForDelete = null;
+        $scope.selectedValues = ['Option One', 'Option Two', 'Option Three', 'Option Four', 'Option Five', 'Option Six', 'Option Seven', 'Option Eight'];
+        $scope.sortableOptions = {
+            update: function(e, ui) {
+            },
+            receive: function(e, ui) {
+            },
+            connectWith: ".picklist"
+        };
+        $scope.add = function(val) {
+            countForAdd = 1;
+            selected = $scope.selectedValues[val];
+            d = val;
+        }
+        $scope.addToDisplayArray = function() {
+            if(countForAdd == 1) {
+                $scope.displayArray.push(selected);
+                $scope.selectedValues.splice(d, 1);
+                selected = '';
+                d=null;
+                countForAdd--;
+            }
+        }
+        $scope.delete = function(val) {
+            countForUp = 1;
+            countForDown = 1;
+            countForDelete = 1;
+            s = $scope.displayArray[val];
+            deleted = val;
+        }
+        $scope.deleteFromDisplayArray = function() {
+            if(countForDelete == 1) {
+                $scope.displayArray.splice(deleted, 1);
+                $scope.selectedValues.push(s);
+                s = '';
+                deleted=null;
+                countForUp--;
+                countForDown--;
+                countForDelete--;
+            }
+        }
+        $scope.up = function() {
+            if(countForUp ==1) {
+                if(deleted!=0) {
+                    var temp = $scope.displayArray[deleted];
+                    $scope.displayArray[deleted] = $scope.displayArray[deleted-1];
+                    $scope.displayArray[deleted-1] = temp;
+                }
+            }
+            countForDelete = null;
+            countForUp = null;
+        }
+        $scope.down = function() {
+            if(countForDown ==1) {
+                if(deleted!=($scope.displayArray.length-1)) {
+                    var temp = $scope.displayArray[deleted];
+                    $scope.displayArray[deleted] = $scope.displayArray[deleted+1];
+                    $scope.displayArray[deleted+1] = temp;
+                }
+            }
+            countForDelete = null;
+            countForDown = null;
+        }
+        $scope.select= function(item) {
+            $scope.selectedVal = item;
+        }
+        $scope.isActive = function(item) {
+            return $scope.selectedVal === item;
+        }
+    }]);
+    </script>
+</apex:page>

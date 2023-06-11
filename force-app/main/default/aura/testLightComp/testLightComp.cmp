@@ -1,0 +1,40 @@
+<aura:component controller="testLightCompCon" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <div aura:id="test">
+        <table>
+            <tr>
+                <td>
+                    <input class="setInputBlock" type="text" value="" placeholder="1" />
+                </td>
+                <td>
+                    <input class="setInputBlock" type="text" value="" placeholder="2"/>
+                </td>
+                <td>
+                    <input class="setInputBlock" type="text" value="" placeholder="3"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="setInputBlock" type="text" value="" placeholder="4"/>
+                </td>
+                <td>
+                    <input class="setInputBlock" type="text" value="" placeholder="5"/>
+                </td>
+                <td>
+                    <input class="setInputBlock" type="text" value="" placeholder="6"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="setInputBlock" type="text" value="" placeholder="7"/>
+                </td>
+                <td>
+                    <input class="setInputBlock" type="text" value="" placeholder="8"/>
+                </td>
+                <td>
+                    <input class="setInputBlock" type="text" value="" placeholder="9"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <input type="button" value="print" onclick="{!c.print}" />
+</aura:component>

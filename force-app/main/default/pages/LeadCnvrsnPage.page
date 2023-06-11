@@ -1,0 +1,228 @@
+<apex:page controller="LeadCnvrsnPageController" docType="html-5.0">
+    <apex:slds />
+    <apex:include pageName="leadCnvrsnCSS"/>
+    <apex:form id="refPage">
+        <div class="slds-scope">
+            <div class="slds-page-header">
+                <div class="slds-page-header__row">
+                    <div class="slds-page-header__col-title">
+                        <div class="slds-media">
+                            <div class="slds-media__body">
+                                <div class="slds-page-header__name">
+                                    <div class="slds-page-header__name-title">
+                                        <h1>
+                                            <span class="slds-page-header__title slds-truncate" title="Rohde Corp - 80,000 Widgets">Convert Lead</span>
+                                        </h1>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="slds-page-header__name-meta LeadName">poroma</p>
+                                </div>
+                                <div class="leadDesc">
+                                    <p class="slds-page-header__name-meta">Leads can be converted to accounts, contacts, opportunities, and followup tasks.</p>
+                                    <p class="slds-page-header__name-meta">You should only convert a lead once you have identified it as qualified.</p>
+                                    <p class="slds-page-header__name-meta">After this lead has been converted, it can no longer be viewed or edited as a lead, but can be viewed in lead reports.</p>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <apex:actionFunction action="{!createAccConOppo}" name="newAccConOpppo" reRender="refPage" />
+                <div class="lineTop" > </div>
+                <div class="buttonArea">
+                    <input type="button" class="slds-button slds-button_outline-brand" value="Convert" onclick="newAccConOpppo();"/>
+                    <input type="button" class="slds-button slds-button_outline-brand" value="Cancel"/>
+                </div>
+                <div class="linebelow" > </div>
+                <div>
+                    <div class="leadHeader">
+                        <p class="psize">
+                            Convert Lead
+                        </p>
+                    </div>
+                    <div class="slds-form-element slds-col slds-size_1-of-2 inputSapce">
+                        <label class="slds-form-element__label" for="text-input-id-1">Record Owner</label>
+                        <div class="slds-form-element__control">
+                            <input id="text-input-id-1" class="slds-input" type="text" value="{!leadObj.Owner.name}" />
+                        </div>
+                    </div>
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <div class="slds-checkbox">
+                                <input type="checkbox" name="options" id="checkbox-2" value="checkbox-2" />
+                                <label class="slds-checkbox__label" for="checkbox-2">
+                                    <span class="slds-checkbox_faux"></span>
+                                    <span class="slds-form-element__label">Send Email to the Owner</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="inputSapce">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-form-element slds-form-element slds-col slds-size_1-of-2">
+                                <div class="slds-form-element__control">   
+                                    <label class="slds-form-element__label" for="combobox-unique-id-10">Account Name</label>
+                                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="true" aria-haspopup="listbox" role="combobox" id="selectList" onclick="showDropDown()">
+                                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right slds-p-horizontal_medium slds-is-relative" role="none">
+                                            <input type="text" class="slds-input slds-combobox__input ddTextBox" id="combobox-unique-id-13" aria-activedescendant="listbox-option-unique-id-01" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" placeholder="None" readonly="true" />
+                                            <img class="leadDropImg" id="rotateImage" src="{!$Resource.LeadIcons}"/>
+                                        </div>
+                                        <div id="listbox-unique-id listBox" class="listContainer" role="listbox" >
+                                            <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid ddBox" role="presentation">
+                                                <li role="presentation" class="slds-listbox__item" onclick="newAccount()">
+                                                    <div id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                                                        <span class="slds-media__body">
+                                                            <span class="slds-truncate">Create New Account :{!leadObj.Company}</span>
+                                                        </span>
+                                                    </div>
+                                                </li>
+                                                <li role="presentation" class="slds-listbox__item" onclick="attachAccount()">
+                                                    <div id="listbox-option-unique-id-02" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                                                        <span class="slds-media__body">
+                                                            <span class="slds-truncate"> Attach :{!leadObj.Company}</span>
+                                                        </span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accImgSet" onclick="newWindowOfAccounts();">
+                                <apex:image html-class="accImgfix" url="{!$Resource.AccountLookup}" width="30" height="30" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-col slds-size_1-of-2 inputSapce">
+                        <label class="slds-form-element__label" for="text-input-id-1">Opportunity Name</label>
+                        <div class="slds-form-element__control">
+                            <input id="text-input-id-1" class="slds-input" type="text" value="{!leadObj.Company}-" />
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-col slds-size_1-of-2 inputSapce">
+                        <label class="slds-form-element__label" for="text-input-id-1">Converted Status</label>
+                        <div class="slds-form-element__control">
+                            <input id="text-input-id-1" class="slds-input" type="text" value="{!leadObj.Status}" disabled="true" />
+                        </div>
+                    </div>
+                    <div class="linebelow" > </div>
+                    <div class="leadHeader">
+                        <p class="psize">
+                            Task Information
+                        </p>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col">
+                            <label class="slds-form-element__label" for="text-input-id-1">Subject</label>
+                            <div class="slds-form-element__control">
+                                <apex:inputText value="{!taskSubject}" html-class="slds-input" />
+                                <!--<input id="text-input-id-1" class="slds-input" type="text" value="" />-->
+                            </div>
+                        </div>
+                        <div class="slds-col slds-form-element slds-col slds-size_1-of-2">
+                            <label class="slds-form-element__label" for="text-input-id-1">Status</label>
+                            <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="true" aria-haspopup="listbox" role="combobox" id="setStatusBlock" onclick="toggleStatusblock();">
+                                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right slds-p-horizontal_medium slds-is-relative" role="none">
+                                    <!--<input type="text" class="slds-input slds-combobox__input ddTextBox" id="combobox-unique-id-12" aria-activedescendant="listbox-option-unique-id-01" value="{!taskStatus}" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" placeholder="Not Started" readonly="true" />-->
+                                    <apex:inputText id="combobox-unique-id-12" value="{!taskStatus}" html-class="slds-input slds-combobox__input ddTextBox" html-placeholder="Not Started"/>
+                                    <img class="StatusDropImg" id="rotateStatusImage" src="{!$Resource.LeadIcons}"/>
+                                </div>
+                                <div id="listbox-unique-id listBox" class="listContainer" role="listbox" >
+                                    <ul id="statusBox" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" role="presentation">
+                                        <li role="presentation" class="slds-listbox__item" onclick="setTastStatus('Not Started');">
+                                            <div id="listbox-option-unique-id-02" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                                                <span class="slds-media__body">
+                                                    <span class="slds-truncate">Not Started</span>
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li role="presentation" class="slds-listbox__item" onclick="setTastStatus('In Progress');">
+                                            <div id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                                                <span class="slds-media__body">
+                                                    <span class="slds-truncate">In Progress</span>
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li role="presentation" class="slds-listbox__item" onclick="setTastStatus('Completed');">
+                                            <div id="listbox-option-unique-id-02" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                                                <span class="slds-media__body">
+                                                    <span class="slds-truncate"> Completed</span>
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li role="presentation" class="slds-listbox__item" onclick="setTastStatus('Wating on someone else');">
+                                            <div id="listbox-option-unique-id-02" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                                                <span class="slds-media__body">
+                                                    <span class="slds-truncate"> Wating on someone else</span>
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li role="presentation" class="slds-listbox__item" onclick="setTastStatus('Deferred');">
+                                            <div id="listbox-option-unique-id-02" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                                                <span class="slds-media__body">
+                                                    <span class="slds-truncate">Deferred</span>
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-col slds-size_1-of-2 inputSapce">
+                        <label class="slds-form-element__label" for="text-input-id-1">Due Date</label>
+                        <div class="slds-form-element__control">
+                           <!-- <input id="text-input-id-1" class="slds-input" type="text" value="{!taskDueDate}" />-->
+                            <apex:input label="datePicker" value="{!taskDueDate}" type="auto" html-class="slds-input" />
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-col slds-size_1-of-2 inputSapce">
+                        <label class="slds-form-element__label" for="text-input-id-1">Priority</label>
+                        <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="true" aria-haspopup="listbox" role="combobox" id="setPriorityBlock" onclick="togglePriorityblock();">
+                            <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right slds-p-horizontal_medium slds-is-relative" role="none">
+                                <input type="text" class="slds-input slds-combobox__input ddTextBox" id="combobox-unique-id-01" aria-activedescendant="listbox-option-unique-id-01" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" placeholder="Normal" readonly="true" />
+                                <img class="PriorityDropImg" id="rotatePriorityImage" src="{!$Resource.LeadIcons}"/>
+                            </div>
+                            <div id="listbox-unique-id listBox" class="listContainer" role="listbox" >
+                                <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid ddBox" role="presentation">
+                                    <li role="presentation" class="slds-listbox__item" onclick="setPriorityStatus('Normal');">
+                                        <div id="listbox-option-unique-id-02" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                                            <span class="slds-media__body">
+                                                <span class="slds-truncate">Normal</span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li role="presentation" class="slds-listbox__item" onclick="setPriorityStatus('Medium');">
+                                        <div id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                                            <span class="slds-media__body">
+                                                <span class="slds-truncate">Medium</span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li role="presentation" class="slds-listbox__item" onclick="setPriorityStatus('Hot');">
+                                        <div id="listbox-option-unique-id-02" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                                            <span class="slds-media__body">
+                                                <span class="slds-truncate">Hot</span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="linebelow" > </div>
+                    <div class="leadHeader">
+                        <p class="psize">Description Information</p>
+                    </div>
+                    <div class="slds-form-element inputSapce">
+                        <label class="slds-form-element__label" for="textarea-id-01">Comments</label>
+                        <div class="slds-form-element__control">
+                            <textarea id="textarea-id-01" class="slds-textarea" placeholder="Comment section"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </apex:form>
+</apex:page>

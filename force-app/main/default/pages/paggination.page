@@ -1,0 +1,80 @@
+<apex:page >
+    <script>
+    var startIndex =1;
+    var endIndex =3;
+    
+    function pagination(){
+        var tab = "<input type='button' value='Prev' onclick='prevClick();'/>";
+        for(var i = startIndex; i <= endIndex ;i++){
+            tab += "<input type='button' value='"+i+"' onclick='pageIndex("+i+")' />";
+        }
+        tab += "<input type='button' value='Next' onclick='nextClick();'/>";
+        document.getElementById('page').innerHTML = tab;
+        
+    }
+    function prevClick(){
+        startIndex -= 3;
+        endIndex -= 3;
+        if(startIndex <= 1){
+             startIndex = 1;
+                endIndex = 3;
+            }
+        if(startIndex > 0 ) {
+            var tab = "<input type='button' value='Prev' onclick='prevClick();'/>";
+            for(var i = startIndex; i <= endIndex ;i++){
+                tab += "<input type='button' value='"+i+"' onclick='pageIndex("+i+")' />";
+            }
+            tab += "<input type='button' value='Next' onclick='nextClick();'/>";
+            document.getElementById('page').innerHTML = tab;
+        }else{
+        startIndex += 3;
+        endIndex += 3;
+        }
+        
+       
+        
+    }
+    function nextClick(){
+        startIndex += 3;
+        endIndex += 3;
+        var tab = "<input type='button' value='Prev' onclick='prevClick();'/>";
+        for(var i = startIndex; i <= endIndex ;i++){
+            tab += "<input type='button' value='"+i+"' onclick ='pageIndex("+i+")'/>";
+        }
+        tab += "<input type='button' value='Next' onclick='nextClick();'/>";
+        document.getElementById('page').innerHTML = tab;
+        
+    }
+    function pageIndex(selected){
+        if(selected == endIndex){
+            startIndex = selected;
+            endIndex += 2;
+   
+            var tab = "<input type='button' value='Prev' onclick='prevClick();'/>";
+            for(var i = startIndex; i <= endIndex ;i++){
+                tab += "<input type='button' value='"+i+"' onclick='pageIndex("+i+")' />";
+            }
+            tab += "<input type='button' value='Next' onclick='nextClick();'/>";
+            document.getElementById('page').innerHTML = tab;
+        }else if(selected == startIndex ){
+            startIndex -= 2;
+            endIndex = selected;
+            if(startIndex <= 1){
+             startIndex = 1;
+                endIndex = 3;
+            }
+            var tab = "<input type='button' value='Prev' onclick='prevClick();'/>";
+            for(var i = startIndex; i <= endIndex ;i++){
+                tab += "<input type='button' value='"+i+"' onclick='pageIndex("+i+")' />";
+            }
+            tab += "<input type='button' value='Next' onclick='nextClick();'/>";
+            document.getElementById('page').innerHTML = tab;
+        }
+        
+    }
+    window.onload = pagination;
+    </script>
+    <div id="page">
+        
+    </div>
+</apex:page>

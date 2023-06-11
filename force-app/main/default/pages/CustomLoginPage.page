@@ -1,0 +1,116 @@
+<apex:page sidebar="false" showHeader="false" controller="CustomLoginController">
+    <apex:slds />
+    
+    <style type='text/css'>
+        .embeddedServiceHelpButton .helpButton .uiButton {
+        background-color: #005290;
+        font-family: "Arial", sans-serif;
+        }
+        .embeddedServiceHelpButton .helpButton .uiButton:focus {
+        outline: 1px solid #005290;
+        }
+    </style>
+    
+    <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+    <script type='text/javascript'>
+        var initESW = function(gslbBaseURL) {
+            embedded_svc.settings.displayHelpButton = true; //Or false
+            embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+            
+            //embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
+            //embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
+            
+            //embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
+            //embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+            
+            // Settings for Chat
+            //embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+            // Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+            // Returns a valid button ID.
+            //};
+            //embedded_svc.settings.prepopulatedPrechatFields = {}; //Sets the auto-population of pre-chat form fields
+            //embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+            //embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
+            
+            embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+            embedded_svc.settings.entryFeature = 'LiveAgent';
+            
+            embedded_svc.init(
+                'https://shashikantyadav-dev-ed.my.salesforce.com',
+                'https://bestshashi-developer-edition.ap5.force.com/test',
+                gslbBaseURL,
+                '00D7F000003DNU2',
+                'Shashi',
+                {
+                    baseLiveAgentContentURL: 'https://c.la1-c1-hnd.salesforceliveagent.com/content',
+                    deploymentId: '5727F000000glu9',
+                    buttonId: '5737F000000gdyh',
+                    baseLiveAgentURL: 'https://d.la1-c1-hnd.salesforceliveagent.com/chat',
+                    eswLiveAgentDevName: 'Shashi',
+                    isOfflineSupportEnabled: false
+                }
+            );
+        };
+    
+    if (!window.embedded_svc) {
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://shashikantyadav-dev-ed.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+        s.onload = function() {
+            initESW(null);
+        };
+        document.body.appendChild(s);
+    } else {
+        initESW('https://service.force.com');
+    }
+    </script>
+    
+    
+    <style>
+        .setSecretInputBlock {background-color: rgb(255, 255, 255); border: 1px solid rgb(217, 219, 221); border-radius: .25rem;
+        width: 100%; transition: border .1s linear,background-color .1s linear;display: inline-block; padding: 0 1rem 0 .75rem;
+        line-height: 1.875rem;min-height: calc(1.875rem + (1px * 2));}
+    </style>
+    <div>
+        <apex:form >
+            <div class="demo-only" style="height: 640px;">
+                <section  role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Login Page</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modalcontent">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="text-input-id-1">User Name</label>
+                                <div class="slds-form-element__control">
+                                    <apex:inputText id="test1" styleClass="setSecretInputBlock"  html-placeholder="User Name" value="{!UserName}" />
+                                </div>
+                            </div>
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="text-input-id-1">Password</label>
+                                <div class="slds-form-element__control">
+                                    <apex:inputSecret id="test2" styleClass="setSecretInputBlock" html-placeholder="Password" value="{!LoginPass}" />
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <apex:actionFunction action="{!checkLoginCredentials}" name="LoginCre" reRender="modalcontent" />
+                        <apex:actionFunction action="{!resetButton}" name="resetButton" reRender="test1,test2" />
+                        <footer class="slds-modal__footer">
+                            <a href="javascript();"> Create new Account </a>
+                            <input type="button" class="slds-button slds-button_brand" value="Re-set" onclick="resetButton();" />
+                            <input type="button" class="slds-button slds-button_brand" value="login" onclick="LoginCre();" />
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+        </apex:form>
+    </div>
+    <script>
+    function checkCre(){
+        console.log('in');
+        LoginCre();
+        console.log('called');
+    }
+    </script>
+</apex:page>

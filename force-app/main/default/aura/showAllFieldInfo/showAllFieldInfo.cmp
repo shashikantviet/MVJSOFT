@@ -1,0 +1,23 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+    <aura:attribute name="objRec" type="Object" />
+    <aura:attribute name="fieldApi" type="String" />
+    <aura:attribute name="fieldLabel" type="String" />
+    <aura:attribute name="fieldType" type="String" />
+    <aura:attribute name="fieldVal" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <aura:if isTrue="{!v.fieldType == 'STRING'}">
+        <ui:outputText value="{!v.fieldVal}"/>
+    </aura:if>
+    <aura:if isTrue="{!v.fieldType == 'PICKLIST'}">
+        
+        <ui:outputText value="{!v.fieldVal}"/>
+    </aura:if>
+    <aura:if isTrue="{!v.fieldType == 'PHONE'}">
+        <ui:outputPhone value="{!v.fieldVal}"/>
+    </aura:if> 
+    
+    <aura:if isTrue="{!v.fieldType == 'EMAIL'}">
+        <ui:outputEmail value="{!v.fieldVal}"/>
+    </aura:if> 
+</aura:component>

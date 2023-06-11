@@ -1,0 +1,34 @@
+<apex:page controller="NewCaseListController">
+    <script>
+    
+    </script>
+    <apex:form >
+        <p>
+            Hello
+        </p>
+        <div id="first" style="{!IF(check == 0,'','Display:none')}">
+            <h2>
+                First Div
+            </h2>
+            <apex:repeat value="{!NewCases}" var="newCase" >
+                <p>
+                    {!newCase.CaseNumber}
+                </p>
+            </apex:repeat>
+        </div>
+        <div id="Second" style="{!IF(check == 1 ,'','Display:none')}">
+            <h2>
+                Second Div
+            </h2>
+            <apex:repeat value="{!NewCases}" var="newCase" >
+                <p>
+                    {!newCase.CaseNumber}
+                </p>
+            </apex:repeat>
+        </div>
+        <input type="button" value ="IGEdge" onclick="newCaseLstAF();" rerender="first"/>
+        <input type ="button" value="Trading" onclick="newCaseLst2AF();" rerender="Second"/>
+        <apex:actionFunction name="newCaseLstAF" action="{!newCaseLst}" />
+        <apex:actionFunction name="newCaseLst2AF" action="{!newCaseLst2}" />
+    </apex:form>
+</apex:page>

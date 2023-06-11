@@ -1,0 +1,23 @@
+.THIS .headerSet{
+    padding: 2px 0px 0px 25px;
+}
+.THIS .hide{
+    display: none;
+}
+.THIS .upDownicons:hover .hide{
+    display: inline-block;
+}
+.THIS .setIcon{
+padding: 4px 0px 0px 10px;
+}
+
+.THIS .hoverWrapper #icons {
+    display:none;
+}
+.THIS .hoverWrapper:hover #icons {
+ display: block;
+}
+
+.THIS .setBrandButton {
+    padding: 0px 0px 0px 38rem;
+}

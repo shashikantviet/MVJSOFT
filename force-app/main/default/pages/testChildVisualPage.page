@@ -1,0 +1,43 @@
+<apex:page controller="EnquiryController" showHeader="false" sidebar="false">
+    <apex:form >
+        <apex:pagemessages >
+        </apex:pagemessages>
+        <script type="text/javascript" src="https://www.google.com/recaptcha/api/js/recaptcha_ajax.js">
+        </script>
+        <script src="https://code.jquery.com/jquery-1.9.1.min.js">
+        </script>
+        <script type="text/javascript">
+            jQuery(document).ready(function (){
+                Recaptcha.create("{!publicKey}",
+                          "dynamic_recaptcha_1",
+                {
+                    theme: "red",
+                    callback: Recaptcha.focus_response_field
+                });
+            });
+        </script>
+        <apex:inputhidden value="{!challenge}" id="challenge" />
+        <apex:inputhidden value="{!response}" id="response" />
+        <script type="text/javascript">
+            function captureResponse(ele) {
+                document.getElementById('{!$Component.challenge}').value =
+                                                  document.getElementById('recaptcha_challenge_field').value;
+                document.getElementById('{!$Component.response}').value =
+                                                  document.getElementById('recaptcha_response_field').value;
+           }
+        </script>
+        <apex:pageblock title="Enquiry">
+            <apex:pageBlockButtons location="bottom" >
+                <apex:commandButton value="Submit" action="{!verifyAndSubmit}"
+                                     onclick="javascript:captureResponse(this);"/>
+                </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="1">
+                <apex:inputField value="{!enquiryObj.First_Name__c}"/>
+                <apex:inputField value="{!enquiryObj.Last_Name__c}"/>
+                <apex:inputField value="{!enquiryObj.Email__c}"/>
+                <apex:inputField value="{!enquiryObj.Enquiry__c}"/>
+                <div id="dynamic_recaptcha_1" style="padding-left: 120px;"></div>
+            </apex:pageBlockSection>
+        </apex:pageblock>
+    </apex:form>
+</apex:page>

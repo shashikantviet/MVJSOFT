@@ -1,0 +1,15 @@
+<apex:page showHeader="false" sidebar="false">
+    <apex:form >
+        <table>
+            <tr>
+            	<td>
+                	<apex:inputTextarea html-placeholder="Comment here" style="height:8.5rem; width:15.5rem;"/>
+                </td>
+                <td>
+                	<input type="button" value="Post Comment"/>
+                </td>
+            </tr>
+        </table>
+    </apex:form>
+    
+</apex:page>

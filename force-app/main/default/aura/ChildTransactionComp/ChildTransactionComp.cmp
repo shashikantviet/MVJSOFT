@@ -1,0 +1,4 @@
+<aura:component >
+    <aura:attribute name="sort" type="boolean" />
+    {!v.sort}
+</aura:component>

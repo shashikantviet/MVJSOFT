@@ -1,0 +1,8 @@
+<aura:component controller="AG_Grid_Controller" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="retValues" type="string" />
+    <ltng:require scripts="{!$Resource.AggridPackage}" afterScriptsLoaded="{!c.doInit}" />
+    <div>test</div>
+    <div style="height: 100%; box-sizing: border-box;">
+        <div aura:id="myGrid"  style="height: 100%;" class="ag-theme-balham"></div>
+    </div>
+</aura:component>

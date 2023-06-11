@@ -1,0 +1,53 @@
+<apex:page controller="newTestController"  sidebar="false" showHeader="false" >
+    <apex:slds />
+    <script>
+    function editContact(val){
+        console.log('>>>>val>>>',val);
+    
+    }
+    </script>
+    <apex:form >
+        <div>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="FirstName">FirstName</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="LastName">LastName</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!cList}" var="LstCon" >
+                        <tr class="slds-hint-parent">
+                            
+                            <td data-label="Account Name">
+                                <div class="slds-truncate" title="">
+                                    {!LstCon.FirstName}
+                                </div>
+                                <div class="slds-hide">
+                                    <apex:inputText value="{!LstCon.FirstName}" />
+                                </div>
+                            </td>
+                            <td data-label="Close Date">
+                                <div class="slds-truncate" title="">
+                                    {!LstCon.LastName}
+                                </div>
+                                <div class="slds-hide">
+                                    <apex:inputText value="{!LstCon.LastName}" />
+                                </div>
+                            </td>
+                            <td>
+                                <input type="button" value="edit" onclick="editContact(this);"/>
+                            </td>
+                            
+                        </tr>
+                    </apex:repeat>
+                    
+                </tbody>
+            </table>
+        </div>
+    </apex:form>
+</apex:page>

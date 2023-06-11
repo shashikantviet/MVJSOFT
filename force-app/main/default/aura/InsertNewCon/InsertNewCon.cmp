@@ -1,0 +1,104 @@
+<aura:component controller="CreatNewContact">
+    <aura:attribute name="newContact" type="Contact"
+                    default="{ 'sobjectType': 'Contact',
+                             'FirstName': '',
+                             'LastName': '',
+                             'Phone': '',
+                             'Birthdate': '' }"/>
+    <aura:attribute name="returnContact" type="Contact[]" />
+    <div class="demo-only" style="height: 640px;" aura:id="mainDiv">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container" >
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.removeModel}">
+                        <lightning:icon iconName="utility:close" size="small" alternativeText="Indicates approval"/>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Modal Header</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-grid">
+                        <div class="slds-form-element slds-size_1-of-2">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="expenseform" label="First Name"
+                                                 name="expenseclient"
+                                                 value="{!v.newContact.FirstName}"
+                                                 placeholder="Contact FirstName"/>
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-size_1-of-2">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="expenseform" label="Last Name"
+                                                 name="expenseclient"
+                                                 value="{!v.newContact.LastName}"
+                                                 placeholder="Contact LastName"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-form-element slds-size_1-of-2">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="expenseform" label="Phone"
+                                                 name="expenseclient"
+                                                 value="{!v.newContact.Phone}"
+                                                 placeholder="Contact Phone"/>
+                                <!--<input type="text" id="form-element-03" class="slds-input" placeholder="Contact Phone" value="{!v.newContact.Phone}"/>-->
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-size_1-of-2">
+                            <div class="slds-form-element__control">
+                                <lightning:input type="date" aura:id="expenseform" label="Birtdate"
+                                                 name="expenseclient"
+                                                 value="{!v.newContact.Birthdate}"
+                                                 placeholder="Contact Birtdate"/>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-scrollable">
+                    <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-hide" aura:id="contactDetail">
+                        <thead>
+                            <tr class="slds-text-title_caps">
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Opportunity Name">Contact FirstName</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Account Name">Contact LastName</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Close Date">Contact phone</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Stage">Contact Birthdate</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration var="lstCont" items="{!v.returnContact}">
+                                <tr>
+                                    <th scope="row" data-label="Opportunity Name">
+                                        <div class="slds-truncate" title="Cloudhub"><a href="javascript:void(0);">{!lstCont.FirstName}</a></div>
+                                    </th>
+                                    <td data-label="Account Name">
+                                        <div class="slds-truncate" title="Cloudhub">{!lstCont.LastName}</div>
+                                    </td>
+                                    <td data-label="Close Date">
+                                        <div class="slds-truncate" title="4/14/2015">{!lstCont.Phone}</div>
+                                    </td>
+                                    <td data-label="Prospecting">
+                                        <div class="slds-truncate" title="Prospecting">{!lstCont.Birthdate}</div>
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick="{!c.createContact}">Create</button>                    
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+</aura:component>

@@ -1,0 +1,51 @@
+<aura:component controller="ContactLightningCardController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:attribute name="conlst" type="list"/>
+    <aura:attribute name="showDropDown" type="Boolean" default="false"/>
+    <div>
+        <aura:iteration  items="{!v.conlst}" var="conValues">
+            <article class="slds-card">
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title">
+                                <span>{!conValues.Name}</span>
+                            </h2>
+                            <h2 class="slds-card__header-title">
+                                <span>{!conValues.Account.Name}</span>
+                            </h2>
+                        </div>
+                        <div class="slds-no-flex">
+                            <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+                                <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="Show More" onclick="{!c.showDropDown}">
+                                    <lightning:icon iconName="utility:down" size="x-small"/>
+                                </button>
+                                <aura:if isTrue="{!v.showDropDown}">
+                                <div class="slds-dropdown slds-dropdown_actions slds-dropdown_right">
+                                    <ul class="slds-dropdown__list" role="menu">
+                                        <li class="slds-dropdown__item" role="presentation">
+                                            <a href="javascript:void(0);" role="menuitem" tabindex="0">
+                                                <span class="slds-truncate" title="Action One">Action One</span>
+                                            </a>
+                                        </li>
+                                        <li class="slds-dropdown__item" role="presentation">
+                                            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                                <span class="slds-truncate" title="Action Two">Action Two</span>
+                                            </a>
+                                        </li>
+                                        <li class="slds-dropdown__item" role="presentation">
+                                            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                                <span class="slds-truncate" title="Action Three">Action Three</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                    </aura:if>
+                            </div>
+                        </div>
+                    </header>
+                </div>
+            </article>
+        </aura:iteration>
+    </div>
+</aura:component>

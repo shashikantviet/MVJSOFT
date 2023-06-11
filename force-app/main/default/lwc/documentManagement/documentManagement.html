@@ -1,0 +1,27 @@
+<template>
+    
+    <lightning-card>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_2-of-3 slds-m-around_medium">
+              <span> <lightning-input type="search" label="Search Documents" onchange={handleSearch}></lightning-input></span>
+            </div>
+            <div class="slds-col slds-size_1-of-3">
+              <span></span>
+            </div>
+          </div>
+        
+        <div class="slds-m-around_medium">
+            <lightning-datatable
+                    key-field="Id"
+                    data={records}
+                    columns={columns}
+                    sorted-by={sortBy}
+                    sorted-direction={sortDirection}
+                    onsort={doSorting}
+                    hide-checkbox-column ="true"
+                    draft-values={draftValues}
+                    onsave={handleSave}>
+            </lightning-datatable>
+        </div>
+    </lightning-card>
+</template>

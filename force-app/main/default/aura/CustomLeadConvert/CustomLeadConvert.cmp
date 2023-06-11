@@ -1,0 +1,302 @@
+<aura:component controller="customLeadConvertController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="AccselectedRecord" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="ContselectedRecord" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="OpptselectedRecord" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="listOfSearchRecords" type="List" description="Use,for store the list of search records which returns from apex class"/>
+    <aura:attribute name="SearchKeyWord" type="string"/>
+    <aura:attribute name="SearchConKeyWord" type="string"/>
+    <aura:attribute name="SearchOppKeyWord" type="string"/>
+    <aura:attribute name="IconName" type="string" default="standard:related_list"/>
+    <aura:attribute name="label" type="string" default=""/>
+    <aura:attribute name="Message" type="String" default=""/> 
+    <aura:attribute name="hidesearchicon" type="Boolean" default="true"/>
+    <aura:attribute name="hidesearchicon2" type="Boolean" default="true"/>
+    <aura:attribute name="hidesearchicon3" type="Boolean" default="true"/>
+    <aura:attribute name="showContactLookUp" type="Boolean" default="false"/>
+    <aura:attribute name="enableOpp" type="Boolean" default="true"/>
+    <aura:attribute name="enableCont" type="Boolean" default="true"/>
+    <aura:attribute name="SobjectName" type="string"/>
+    <aura:attribute name="ObjforClear" type="string"/>
+    <aura:attribute name="showLookUp" type="Boolean" default="true"/>
+    <aura:attribute name="showLookUp2" type="Boolean" default="true"/>
+    <aura:attribute name="showLookUp3" type="Boolean" default="true"/>
+    <aura:attribute name="showInput" type="Boolean" default="false"/>
+    <aura:attribute name="showInput2" type="Boolean" default="false"/>
+    <aura:attribute name="showInput3" type="Boolean" default="false"/>
+    <aura:attribute name="currentLeadRec" type="SObject" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="SelectAccId" type="string"/>
+    <aura:attribute name="Street" type="string"/>
+    <aura:attribute name="City" type="string"/>
+    <aura:attribute name="State" type="string"/>
+    <aura:attribute name="Country" type="string"/>
+    <aura:attribute name="PostalCode" type="string"/>
+    <aura:attribute name="newContName" type="String" />
+    <aura:attribute name="AccId" type="String" />
+    <aura:attribute name="brandbtn" type="boolean" default="true" />
+    
+    <aura:attribute name="CreateObjects" type="SObject"
+                     default="{     'OpptName': '',
+                                    'AcctName': '',
+                                    'ContName': ''}"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>    
+    
+    <!--declare events hendlers-->  
+    <aura:handler name="oSelectedRecordEvent" event="c:selectedsObjectRecordEvent" action="{!c.handleComponentEvent}"/>
+    <div>
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-grid">
+                            <div class="slds-p-top_xx-small slds-p-right_medium">
+                                <lightning:icon iconName="standard:lead" size="medium"/>
+                            </div>
+                            <div class="slds-media__body">
+                                <div class="slds-page-header__name">
+                                    <div class="slds-page-header__name-title">
+                                        <h1>
+                                            <span class="slds-page-header__title slds-truncate" title="Rohde Corp - 80,000 Widgets">Convert Lead</span>
+                                        </h1>
+                                    </div>
+                                </div>          
+                                <p class="slds-page-header__name-meta">{!v.currentLeadRec.Name}</p>
+                            </div>   
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            <div class="slds-align_absolute-center">
+                <button class="slds-button slds-button_brand" disabled="{!v.brandbtn}" onclick="{!c.Convertlead}">Convert</button>
+                
+            </div>
+            <br/><br/>
+            <div class="slds-grid">
+                <div class="slds-size_1-of-5">
+                    <div><br/>
+                        <div class="slds-form-element">
+                            <label class="slds-checkbox_toggle slds-grid">
+                                <span class="slds-form-element__label slds-m-bottom_none">Create new?</span>
+                                <input name="checkbox-toggle-2" Id='test2' aura:id='test2' type="checkbox" onclick="{!c.createtog2}" disabled="{!v.enableOpp}" aria-describedby="checkbox-toggle-2"/>
+                                <span id="checkbox-toggle-2" class="slds-checkbox_faux_container" aria-live="assertive">
+                                    <span class="slds-checkbox_faux"></span>
+                                    <span class="slds-checkbox_on">YES</span>
+                                    <span class="slds-checkbox_off">NO</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-size_4-of-5">
+                    <aura:if isTrue="{!v.showLookUp2}">
+                        <div onmouseleave="{!c.onblur2}" aura:id="searchRes2" class="slds-form-element slds-lookup slds-is-close" data-select="single">
+                            <label class="slds-form-element__label" for="lookup-348">{!v.label}</label>
+                            <div class="slds-form-element__control">
+                                <div class="slds-input-has-icon slds-input-has-icon--right">
+                                    <aura:if isTrue="{!v.hidesearchicon2}">
+                                        <lightning:icon class="slds-input__icon slds-show" aura:id="searchiconid" iconName="utility:search" size="x-small" alternativeText="search"/> 
+                                    </aura:if>
+                                    <!-- This markup is for when an record is selected -->
+                                    <div aura:id="lookup-pill2" class="slds-pill-container slds-hide">
+                                        <lightning:pill class="pillSize" label="{!v.ContselectedRecord.Name}" aura:id="getOpptPillId"  name="Opportunity" onremove="{! c.clear }">
+                                            <aura:set attribute="media">
+                                                <lightning:icon iconName="{!v.IconName}" size="x-small" alternativeText="{!v.IconName}"/>
+                                            </aura:set>
+                                        </lightning:pill>
+                                    </div>
+                                    <div aura:id="lookupField2" class="slds-show">
+                                        <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
+                                            <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="{!v.IconName}" size="x-small" alternativeText="icon"/>
+                                            <span class="slds-assistive-text"></span>
+                                        </span>
+                                        <ui:inputText aura:id="showOppInput" click="{!c.onfocus2}" updateOn="keyup" keyup="{!c.keyPressController2}" class="slds-lookup__search-input slds-input leftPaddingClass" value="{!v.SearchConKeyWord}" disabled="{!v.enableOpp}" placeholder="search.."/>
+                                    </div>   
+                                </div>
+                            </div>
+                            <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+                                <lightning:spinner class="slds-hide" variant="brand" size="small" aura:id="mySpinner2"/>
+                                <center> {!v.Message}</center>
+                                <aura:iteration items="{!v.listOfSearchRecords}" var="singleRec">
+                                    <c:customLookupResult oRecord="{!singleRec}" IconName="{!v.IconName}" sObjName="Opportunity"/>
+                                </aura:iteration>
+                            </ul>
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.showInput2}">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="text-input-id-1">New Opportunity</label>
+                            <div class="slds-form-element__control">
+                                <input id="text-input-id-1" class="slds-input" type="text" value="{!v.currentLeadRec.Company+'-'}" disabled="{!v.enableOpp}" placeholder="Account Name"/>
+                            </div>
+                        </div>
+                    </aura:if>
+                </div>
+            </div>
+            <ui:inputCheckbox class="myCheckbox" aura:id="checkboxLeads" label="Need to create new Opportunity..?" change="{!c.createNewOpp}" value="False"/>
+            <br/><br/>
+            <div class="slds-grid">
+                <div class="slds-size_1-of-5">
+                    <p class="slds-text-title_caps">sold to company</p><br/>
+                    <div>
+                        <div class="slds-form-element">
+                            <label class="slds-checkbox_toggle slds-grid">
+                                <span class="slds-form-element__label slds-m-bottom_none">Create new?</span>
+                                <input name="checkbox-toggle-2" Id='test' aura:id='test' onclick="{!c.createtog}" type="checkbox" aria-describedby="checkbox-toggle-2" />
+                                <span id="checkbox-toggle-2" class="slds-checkbox_faux_container" aria-live="assertive">
+                                    <span class="slds-checkbox_faux"></span>
+                                    <span class="slds-checkbox_on">YES</span>
+                                    <span class="slds-checkbox_off">NO</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-size_4-of-5">
+                    <aura:if isTrue="{!v.showLookUp}">
+                        <div onmouseleave="{!c.onblur}" aura:id="searchRes" class="slds-form-element slds-lookup slds-is-close" data-select="single">
+                            <label class="slds-form-element__label" for="lookup-348">{!v.label}</label>
+                            <div class="slds-form-element__control">
+                                <div class="slds-input-has-icon slds-input-has-icon--right">
+                                    <aura:if isTrue="{!v.hidesearchicon}">
+                                        <lightning:icon class="slds-input__icon slds-show" aura:id="searchiconid" iconName="utility:search" size="x-small" alternativeText="search"/> 
+                                    </aura:if>
+                                    <!-- This markup is for when an record is selected -->
+                                    <div aura:id="lookup-pill" class="slds-pill-container slds-hide">
+                                        <lightning:pill class="pillSize" aura:id="getAccPillId"  name="Account" label="{!v.AccselectedRecord.Name}" onremove="{! c.clear2 }">
+                                            <aura:set attribute="media">
+                                                <lightning:icon iconName="{!v.IconName}" size="x-small" alternativeText="{!v.IconName}"/>
+                                            </aura:set>
+                                        </lightning:pill>
+                                    </div>
+                                    <div aura:id="lookupField" class="slds-show">
+                                        <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
+                                            <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="{!v.IconName}" size="x-small" alternativeText="icon"/>
+                                            <span class="slds-assistive-text"></span>
+                                        </span>
+                                        <ui:inputText click="{!c.onfocus}" updateOn="keyup" keyup="{!c.keyPressController}" class="slds-lookup__search-input slds-input leftPaddingClass" value="{!v.SearchKeyWord}" placeholder="search.."/>
+                                    </div>   
+                                </div>
+                            </div>
+                            <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+                                <lightning:spinner class="slds-hide" variant="brand" size="small" aura:id="mySpinner"/>
+                                <center> {!v.Message}</center>
+                                <aura:iteration items="{!v.listOfSearchRecords}" var="singleRec">
+                                    <c:customLookupResult oRecord="{!singleRec}" IconName="{!v.IconName}" sObjName="Account" />
+                                </aura:iteration>
+                            </ul>
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.showInput}">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="text-input-id-1">New Account</label>
+                            <div class="slds-form-element__control">
+                                <input id="text-input-id-1" class="slds-input" type="text" value="" placeholder="Account Name"/>
+                            </div>
+                        </div>
+                    </aura:if>
+                </div>
+            </div><br/><br/>
+            
+            
+            <div class="slds-grid">
+                <div class="slds-size_1-of-5">
+                    <p class="slds-text-title_caps">Ship to location</p><br/>
+                    <div>
+                        <div class="slds-form-element">
+                            <label class="slds-checkbox_toggle slds-grid">
+                                <span class="slds-form-element__label slds-m-bottom_none">Create new?</span>
+                                <input name="checkbox-toggle-2" Id='test3' aura:id='test3' type="checkbox" onclick="{!c.createtog3}" aria-describedby="checkbox-toggle-2" />
+                                <span id="checkbox-toggle-2" class="slds-checkbox_faux_container" aria-live="assertive">
+                                    <span class="slds-checkbox_faux"></span>
+                                    <span class="slds-checkbox_on">YES</span>
+                                    <span class="slds-checkbox_off">NO</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-size_4-of-5">
+                    <aura:if isTrue="{!v.showLookUp3}">
+                        <div onmouseleave="{!c.onblur3}" aura:id="searchRes3" class="slds-form-element slds-lookup slds-is-close" data-select="single">
+                            <label class="slds-form-element__label" for="lookup-348">{!v.label}</label>
+                            <div class="slds-form-element__control">
+                                <div class="slds-input-has-icon slds-input-has-icon--right">
+                                    <aura:if isTrue="{!v.hidesearchicon3}">
+                                        <lightning:icon class="slds-input__icon slds-show" aura:id="searchiconid" iconName="utility:search" size="x-small" alternativeText="search"/> 
+                                    </aura:if>
+                                    <!-- This markup is for when an record is selected -->
+                                    <div aura:id="lookup-pill3" class="slds-pill-container slds-hide" >
+                                        <lightning:pill class="pillSize" aura:id="getContPillId"  name="Contact" label="{!v.OpptselectedRecord.Name}" onremove="{! c.clear3 }">
+                                            <aura:set attribute="media">
+                                                <lightning:icon iconName="{!v.IconName}" size="x-small" alternativeText="{!v.IconName}"/>
+                                            </aura:set>
+                                        </lightning:pill>
+                                    </div>
+                                    <div aura:id="lookupField3" class="slds-show">
+                                        <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
+                                            <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="{!v.IconName}" size="x-small" alternativeText="icon"/>
+                                            <span class="slds-assistive-text"></span>
+                                        </span>
+                                        <ui:inputText click="{!c.onfocus3}" updateOn="keyup" keyup="{!c.keyPressController3}" class="slds-lookup__search-input slds-input leftPaddingClass" value="{!v.SearchOppKeyWord}" placeholder="search.."/>
+                                    </div>   
+                                </div>
+                            </div>
+                            <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+                                <lightning:spinner class="slds-hide" variant="brand" size="small" aura:id="mySpinner3"/>
+                                <center> {!v.Message}</center>
+                                <aura:iteration items="{!v.listOfSearchRecords}" var="singleRec">
+                                    <c:customLookupResult oRecord="{!singleRec}" IconName="{!v.IconName}" sObjName="Contact"/>
+                                </aura:iteration>
+                            </ul>
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.showInput3}">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="text-input-id-1">New Contact</label>
+                            <div class="slds-form-element__control">
+                                <input id="text-input-id-1" class="slds-input" type="text" value="{!v.newContName}" placeholder="New Account Name" />
+                            </div>
+                        </div>
+                    </aura:if>
+                    <br/>
+                    <div>
+                        <div class="slds-grid ">
+                            <div class="slds-form-element slds-col slds-size_1-of-2 setTheBox">
+                                <label class="slds-form-element__label" for="textarea-id-01">Street</label>
+                                <div class="slds-form-element__control">
+                                    <textarea id="textareaBox1" class="slds-textarea" disabled="{!v.enableCont}" placeholder="Placeholder Text" value="{!v.Street}"></textarea>
+                                </div>
+                            </div>
+                            <div class="slds-form-element slds-col slds-size_1-of-2 setTheBox">
+                                <label class="slds-form-element__label" for="textarea-id-01">City</label>
+                                <div class="slds-form-element__control">
+                                    <textarea id="textareaBox2" class="slds-textarea" placeholder="Placeholder Text" value="{!v.City}" disabled="{!v.enableCont}"></textarea>
+                                </div>
+                            </div>
+                        </div><br/>
+                        <div class="slds-grid">
+                            <div class="slds-form-element slds-col slds-size_3-of-12 setTheBox">
+                                <label class="slds-form-element__label" for="text-input-id-1">Country</label>
+                                <div class="slds-form-element__control">
+                                    <input id="textBox1" class="slds-input" type="text" value="{!v.Country}" disabled="{!v.enableCont}"/>
+                                </div>
+                            </div>
+                            <div class="slds-form-element slds-col slds-size_3-of-12 setTheBox">
+                                <label class="slds-form-element__label" for="text-input-id-1">State</label>
+                                <div class="slds-form-element__control">
+                                    <input id="textBox2" class="slds-input" type="text" value="{!v.State}" disabled="{!v.enableCont}" />
+                                </div>
+                            </div>
+                            <div class="slds-form-element slds-col slds-size_6-of-12 setTheBox">
+                                <label class="slds-form-element__label" for="text-input-id-1">ZIP code</label>
+                                <div class="slds-form-element__control">
+                                    <input id="textBox3" class="slds-input" type="text" value="{!v.PostalCode}" disabled="{!v.enableCont}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

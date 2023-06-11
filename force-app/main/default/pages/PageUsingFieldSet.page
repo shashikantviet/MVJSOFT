@@ -1,0 +1,102 @@
+<apex:page controller="MerchandiseDetails" applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" >
+    <apex:slds />
+    <style>
+        .inputBlock {margin: 19px 19px 19px 19px; width: 30%; }
+        .SaveButton {margin: 19px 19px 19px 19px;}
+        #showInputBlock{text-align: -webkit-center;}
+    </style>
+    <script>
+    	function createNewRec(){
+            var val = document.getElementById("showInputBlock");
+            val.classList.remove('slds-hide');
+        }
+    	
+    	function insertNewRecord(){
+        	newRec();
+            var val = document.getElementById("showInputBlock");
+            val.classList.add('slds-hide');
+        }
+    	function cancelNewRecord(){
+        var val = document.getElementById("showInputBlock");
+            val.classList.add('slds-hide');
+        }
+    </script>
+    <apex:form >
+        <div class="slds-scope" >
+            <div style="position: relative; height: 100px;">
+                <div class="slds-builder-header_container">
+                    <header class="slds-builder-header">
+                        <div class="slds-builder-header__item">
+                            <div class="slds-builder-header__item-label slds-media slds-media_center">
+                                <div class="slds-media__figure">
+                                </div>
+                                <div class="slds-media__body">Merchandise</div>
+                            </div>
+                        </div>
+                        <nav class="slds-builder-header__item slds-builder-header__nav">
+                            <ul class="slds-builder-header__nav-list">
+                                <li class="slds-builder-header__nav-item">
+                                    <a href="{!linkToRec}" class="slds-builder-header__item-action slds-media slds-media_center">
+                                        <span class="slds-media__body">
+                                            <span class="slds-truncate" title="Link">Link</span>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="slds-builder-header__item">
+                            <h1 class="slds-builder-header__item-label">Page Type</h1>
+                        </div>
+                        <div class="slds-builder-header__item slds-builder-header__utilities">
+                            <div class="slds-builder-header__utilities-item">
+                                <a href="javascript:void(0);" class="slds-builder-header__item-action slds-media slds-media_center">
+                                    <div class="slds-media__body">Back</div>
+                                </a>
+                            </div>
+                            <div class="slds-builder-header__utilities-item">
+                                <a href="javascript:void(0);" class="slds-builder-header__item-action slds-media slds-media_center">
+                                    <div class="slds-media__body">Help</div>
+                                </a>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="slds-builder-toolbar" role="toolbar">
+                        <div class="slds-builder-toolbar__actions" aria-label="Document actions">
+                            <input type="button" class="slds-button slds-button_brand" value="Create New Record" onclick="createNewRec();" />
+                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-hide" id="showInputBlock">
+                <div class="slds-form-element inputBlock ">
+                    <label class="slds-form-element__label" for="text-input-id-1">
+                        <abbr class="slds-required" title="required">*</abbr> Name</label>
+                    <div class="slds-form-element__control">
+                        <apex:inputText html-placeholder="Name" required="true"  styleclass="slds-input" value="{!merName}" />
+                        <!--<input type="text" required="" id="text-input-id-1" class="slds-input" placeholder="Name" />-->
+                    </div>
+                </div>
+                <div class="slds-form-element inputBlock">
+                    <label class="slds-form-element__label" for="text-input-id-1">Last Name</label>
+                    <div class="slds-form-element__control">
+                        <apex:inputText html-placeholder="Last Name" styleclass="slds-input" value="{!merLastName}" />
+                        <!--<input type="text" id="text-input-id-1" class="slds-input" placeholder="Last Name" />-->
+                    </div>
+                </div>
+                <div class="slds-form-element inputBlock">
+                    <label class="slds-form-element__label" for="text-input-id-1">Age</label>
+                    <div class="slds-form-element__control">
+                        <apex:inputText html-placeholder="Age" styleclass="slds-input" value="{!merAge}" />
+                        <!--<input type="text" id="text-input-id-1" class="slds-input" placeholder="Age" />-->
+                    </div>
+                </div>
+                <div class="SaveButton">
+                     <input type="button" class="slds-button slds-button_brand " value="Save" onclick="insertNewRecord();"/>
+                     <input type="button" class="slds-button slds-button_brand " value="Cancel" onclick="cancelNewRecord();"/>
+                </div>
+            </div>
+            <apex:actionFunction action="{!saveNewRec}" name="newRec" reRender="showInputBlock" />
+        </div>
+    </apex:form>
+</apex:page>

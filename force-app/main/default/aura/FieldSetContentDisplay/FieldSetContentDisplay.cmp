@@ -1,0 +1,52 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="objectName" type="String" />
+    <aura:attribute name="objRecVal" type="Object" />
+    <aura:attribute name="fieldVal" type="String" />
+    
+    <aura:attribute name="fieldLabel" type="String" />
+    <aura:attribute name="fieldAPI" type="String" />
+    <aura:attribute name="fieldType" type="String" />
+    <aura:attribute name="isEditFields" type="boolean" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    
+    
+    <aura:if isTrue="{!v.fieldType == 'STRING'}">
+        <aura:if isTrue="{!v.isEditFields}">
+            <div class="slds-size--1-of-2 slds-m-vertical--large ">                
+                {!v.fieldLabel} : <br/><ui:inputText class="field" value="{!v.fieldVal}" updateOn="keyup" change="{!c.updateRecVal}"/><br/>
+            </div>
+        </aura:if> 
+        <aura:if isTrue="{!!v.isEditFields}">
+            <div class="slds-size--1-of-2 slds-border_bottom " style="padding: 0px 0px 19px 0px!important;">
+                {!v.fieldLabel} : <ui:outputText value="{!v.fieldVal}" /><br/>
+            </div>
+        </aura:if>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.fieldType == 'CURRENCY'}">
+        <aura:if isTrue="{!v.isEditFields}">
+            <div class="slds-size--1-of-2 slds-m-vertical--small ">                
+                {!v.fieldLabel} : <br/><ui:inputCurrency class="field" value="{!v.fieldVal}" updateOn="keyup" change="{!c.updateRecVal}"/><br/>
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!!v.isEditFields}">
+            <div class="slds-size--1-of-2 slds-border_bottom " style="padding: 0px 0px 19px 0px!important;">
+                {!v.fieldLabel} : <ui:outputCurrency value="{!v.fieldVal}" /><br/>
+            </div>
+        </aura:if>
+    </aura:if>
+    
+    
+    <aura:if isTrue="{!v.fieldType == 'DATE'}">
+        <aura:if isTrue="{!v.isEditFields}">
+            <div class="slds-size--1-of-2 slds-m-vertical--small ">                
+                {!v.fieldLabel} : <ui:inputDate class="field" value="{!v.fieldVal}" updateOn="keyup" change="{!c.updateRecVal}" displayDatePicker="true"/><br/>
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!!v.isEditFields}">
+            <div class="slds-size--1-of-2 slds-border_bottom " style="padding: 0px 0px 19px 0px!important;">
+                {!v.fieldLabel} : <ui:outputDate value="{!v.fieldVal}" /><br/>
+            </div>
+        </aura:if> 
+    </aura:if>
+</aura:component>

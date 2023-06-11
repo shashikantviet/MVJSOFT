@@ -1,0 +1,19 @@
+<apex:page controller="selectOptionController" >
+    <apex:form id="XYZ">
+        <apex:selectList id="chooseColor" value="{!s}" size="1">
+            <apex:selectOption onclick="accountRecAF" itemValue="Account" itemLabel="Account" />
+            <apex:selectOption onclick="ContactRecAF" itemValue="Contact" itemLabel="Conatct" />
+            <apex:selectOption onclick="leadRecAF" itemValue="Lead" itemLabel="Lead" />
+        </apex:selectList> 
+        <apex:repeat value="{!lstOfRec}" var="recs">
+            
+            <p>
+                {!recs['Name']}
+            </p>
+        </apex:repeat>
+        <apex:actionFunction action="{!accountRec}" name="accountRecAF" reRender="XYZ"/>
+        <apex:actionFunction action="{!ContactRec}" name="ContactRecAF" reRender="XYZ"/>
+        <apex:actionFunction action="{!leadRec}" name="leadRecAF" reRender="XYZ"/>
+    </apex:form>
+    
+</apex:page>

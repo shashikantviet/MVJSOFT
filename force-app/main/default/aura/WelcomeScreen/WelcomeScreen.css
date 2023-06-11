@@ -1,0 +1,26 @@
+.THIS .imageFix {
+    position: relative;
+    width: 30%;
+    height: 30%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 7px solid darkslategrey;
+}
+.THIS .ImagePadFix{
+    padding: 5px 0px 0px 0px;
+}
+.THIS .setLeftPart{
+    text-align: center;
+}
+.THIS H1{
+    font-size: 35px;
+    font-weight: 600;
+}
+.THIS p{
+    font-size: 18px;
+    font-weight: 400;
+}
+.THIS a:hover{
+    text-decoration: none;
+}

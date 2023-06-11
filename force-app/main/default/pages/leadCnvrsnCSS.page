@@ -1,0 +1,83 @@
+<apex:page controller="LeadCnvrsnPageController">
+    <style>
+        .LeadName { text-decoration: underline!important; font-size: 17px!important; }
+        .leadDesc { padding: 25px 0px 0px 0px; }
+        .lineTop { height: 29px; border-bottom: 3px outset; }
+        .buttonArea { background-color: transparent; padding: 28px 0px 0px 0px; text-align: center; }
+        .linebelow { height: 29px; border-bottom: 1px outset; }
+        .leadHeader { background: lightsteelblue;}
+        .psize { font-size: 16px;}
+        .inputSapce {padding: 11px 0px 14px 0px;}
+        .slds-scope .slds-p-horizontal_medium, .slds-scope .slds-p-horizontal--medium {padding: 0px 0px 0px 0px!important;}
+        .accImgSet {padding: 21px 0px 0px 0px;}
+        .accImgfix:hover {border: 1px solid ivory};
+        .leadDropImg {position: absolute!important; top: 7px!important; right: 5px!important;}
+        #rotateImage {position: absolute!important; top: 7px!important; right: 5px!important;height: 15px; }
+        #rotateStatusImage {position: absolute!important; top: 7px!important; right: 5px!important;height: 15px; }
+        #rotatePriorityImage {position: absolute!important; top: 7px!important; right: 5px!important;height: 15px; }
+        #statusBox {width: 514px;}
+    </style>
+    <script>
+    function showDropDown(){
+        var varOpen = document.getElementById('selectList');
+        varOpen.classList.toggle("slds-is-open");
+        var imgSet=document.getElementById('rotateImage');
+        var check = Boolean(imgSet.style.transform);
+        if(check == false){
+        	imgSet.setAttribute('style','transform:rotate(90deg)');
+        }
+        else{
+        	imgSet.removeAttribute('style','transform:rotate(90deg)');
+        }
+        
+    }
+    function attachAccount(){
+        document.getElementById("combobox-unique-id-13").placeholder = "Attach :{!leadObj.Company}";
+    }
+    function newAccount(){
+        document.getElementById("combobox-unique-id-13").placeholder = "Create New Account :{!leadObj.Company}";
+    }
+    
+    function newWindowOfAccounts(){
+        window.open('/apex/AccountRecords','_blank', 'width=750, height=400');
+    }
+    
+    function toggleStatusblock(){
+        var varOpen = document.getElementById('setStatusBlock');
+        varOpen.classList.toggle("slds-is-open");
+        var imgSet=document.getElementById('rotateStatusImage');
+        var check = Boolean(imgSet.style.transform);
+        if(check == false){
+        	imgSet.setAttribute('style','transform:rotate(90deg)');
+        }
+        else{
+        	imgSet.removeAttribute('style','transform:rotate(90deg)');
+        }
+    }
+    
+    function setTastStatus(selected){
+        document.getElementById("combobox-unique-id-12").placeholder = selected;
+        document.getElementById("combobox-unique-id-12").value = selected;
+        console.log('>>>>setTastStatus>>>>',document.getElementById("combobox-unique-id-12").value);
+    }
+    
+    function togglePriorityblock(){
+        var varOpen = document.getElementById('setPriorityBlock');
+        varOpen.classList.toggle("slds-is-open");
+        var imgSet=document.getElementById('rotatePriorityImage');
+        var check = Boolean(imgSet.style.transform);
+        if(check == false){
+        	imgSet.setAttribute('style','transform:rotate(90deg)');
+        }
+        else{
+        	imgSet.removeAttribute('style','transform:rotate(90deg)');
+        }
+    }
+    
+    function setPriorityStatus(selected){
+        document.getElementById("combobox-unique-id-01").placeholder = selected;
+        document.getElementById("combobox-unique-id-01").value = selected;
+        console.log('>>>>setPriorityStatus>>>>',document.getElementById("combobox-unique-id-01").value);
+    } 
+    </script>
+</apex:page>

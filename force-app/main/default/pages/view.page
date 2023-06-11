@@ -1,0 +1,14 @@
+<apex:page controller="AccountDetail" >
+    <apex:form >
+        <input type="button" action="accountLstAf();" value="Click" reRender ="acc" /> 
+    	<!--<apex:commandButton action="accountLstAf();"  value="click me"  reRender="acc"/>-->
+        <apex:actionFunction name="accountLstAf" action="{!accountLst}" />
+        <apex:outputPanel id="acc">
+        	<apex:repeat value="{!lstAccount}" var="lst">
+            	<h2>
+                    {!lst.Name}<br/>
+                </h2>
+            </apex:repeat>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

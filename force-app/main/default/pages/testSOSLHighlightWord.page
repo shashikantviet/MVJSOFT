@@ -1,0 +1,22 @@
+<apex:page controller="testLightCompCon">
+    <apex:form >
+        <apex:actionFunction action="{!lstofContact}"  name="lstCon" />
+        <input type="button" value="show All Contacts" onclick="lstCon();" />
+        <div>
+            <div>
+                <p>
+                    Total No. Of Contacts : {!totalNoOfContact}
+                </p>
+            </div>
+            <table>
+                <apex:repeat value="{!lstCon}" var="lstObjCon" >
+                    <tr>
+                        <td>
+                            {!lstObjCon.FirstName}
+                        </td>
+                    </tr>
+                </apex:repeat>
+            </table>
+        </div>
+    </apex:form>
+</apex:page>

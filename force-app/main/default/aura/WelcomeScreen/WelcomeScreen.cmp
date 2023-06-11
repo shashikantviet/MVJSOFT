@@ -1,0 +1,81 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+    
+    <div class="slds-builder-header">
+        <div class="slds-builder-header__item">
+            <div class="slds-builder-header__item-label slds-media slds-media_center">
+                <div class="slds-media__body">HIDDEN COVE <br/> APPARTMENT Home</div>
+            </div>
+        </div>
+        <div class="slds-builder-header__item slds-builder-header__utilities">
+            <div class="slds-builder-header__utilities-item">
+                <a href="javascript:void(0);" class="slds-builder-header__item-action slds-media slds-media_center">
+                    <div class="slds-media__body">NEW QUOTE</div>
+                </a>
+            </div>
+            <div class="slds-builder-header__utilities-item">
+                <a href="javascript:void(0);" class="slds-builder-header__item-action slds-media slds-media_center">
+                    <div class="slds-media__body">FIND QUOTE</div>
+                </a>
+            </div>
+            <div class="slds-builder-header__utilities-item">
+                <a href="javascript:void(0);" class="slds-builder-header__item-action slds-media slds-media_center">
+                    <div class="slds-media__body">SIGN IN</div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <div class="slds-grid slds-grid_pull-padded-medium">
+    	<div class="slds-size_1-of-2 setLeftPart">
+        	<h1>
+            	Welcome
+            </h1>
+            
+            <p>
+                Get a qoute for the <br/> home of your  dreams <br/> in less than 5 <br/> minutes.
+            </p>
+            <br/>
+            <input class="slds-button slds-button_brand" type="button" value="GET STARTED" style="border-radius: 15px;"/>
+            <br/>
+            <br/>
+            <a href="#javascript();" >I already have a qoute</a>
+        </div>
+        <div class="slds-col slds-p-horizontal_medium slds-size_1-of-2">
+            <div class="ImagePadFix">
+            	<img class="imageFix" src="{!$Resource.HotelImages + '/hotelImages/rusOne.jpg'}" style="padding:11px;"/>
+                <img class="imageFix" src="{!$Resource.HotelImages + '/hotelImages/rusOneInside.jpg'}" />
+            </div>
+            <div class="ImagePadFix">
+            	<img class="imageFix" src="{!$Resource.HotelImages + '/hotelImages/canOne.jpg'}" style="padding:3px;"/>
+                <img class="imageFix" src="{!$Resource.HotelImages + '/hotelImages/canOneInside.jpg'}" />
+            </div>
+        	
+        </div>
+    </div>
+    <br/><br/>
+    <div class="slds-builder-header">
+        <div class="slds-builder-header__item">
+            <div class="slds-builder-header__item-label slds-media slds-media_center">
+                <div class="slds-media__body">GET HELP</div>
+            </div>
+        </div>
+        <div class="slds-builder-header__item slds-builder-header__utilities">
+            <div class="slds-builder-header__utilities-item">
+                <a href="javascript:void(0);" class="slds-builder-header__item-action slds-media slds-media_center">
+                    <div class="slds-media__body">PRIVACY POLICY</div>
+                </a>
+            </div>
+            <div class="slds-builder-header__utilities-item">
+                <a href="javascript:void(0);" class="slds-builder-header__item-action slds-media slds-media_center">
+                    <div class="slds-media__body">TERMS OF USE</div>
+                </a>
+            </div>
+            <div class="slds-builder-header__utilities-item">
+                <a href="javascript:void(0);" class="slds-builder-header__item-action slds-media slds-media_center">
+                    <div class="slds-media__body">SECURED WITH SSL</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</aura:component>

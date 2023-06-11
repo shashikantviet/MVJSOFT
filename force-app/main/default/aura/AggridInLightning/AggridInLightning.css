@@ -1,0 +1,18 @@
+.THIS html, .THIS body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+}
+.THIS html {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+    overflow: auto;
+}
+.THIS body {
+    padding: 1rem;
+    overflow: auto;
+}

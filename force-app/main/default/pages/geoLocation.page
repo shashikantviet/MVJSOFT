@@ -1,0 +1,66 @@
+<apex:page sidebar="false" showHeader="false" >
+    <apex:includeScript value="{!$Resource.mntrs_modernizr}"/>
+    <script>
+    let lat1;
+    let lat2;
+    let long1;
+    let long2;
+    function generateStartLocation() {
+        if (Modernizr.geolocation){
+            navigator.geolocation.getCurrentPosition(
+                function(position)
+                {
+                    lat1 = position.coords.latitude;
+                    long1 = position.coords.longitude
+                    console.log('>>>latitude>>>>',position.coords.latitude);
+                    console.log('>>>longitude>>>>',position.coords.longitude);
+                }   
+            );
+        } 
+        else 
+        {
+            alert ("Browser unsupported.");
+        }
+    }
+    function generateStopLocation() {
+        if (Modernizr.geolocation){
+            navigator.geolocation.getCurrentPosition(
+                function(position)
+                {
+                    lat2 = position.coords.latitude;
+                    long2 = position.coords.longitude
+                    console.log('>>>latitude>>>>',position.coords.latitude);
+                    console.log('>>>longitude>>>>',position.coords.longitude);
+                }   
+            );
+        } 
+        else 
+        {
+            alert ("Browser unsupported.");
+        }
+    }
+    
+    function totalDistance(){
+        var R = 6371e3; // metres
+        var φ1 = lat1;
+        var φ2 = lat2;
+        var Δφ = lat2-lat1;
+        var Δλ = long2-long1;
+        
+        var a = Math.sin(Δφ/2) * Math.sin(Δφ/2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ/2) * Math.sin(Δλ/2);
+        console.log('>>>a>>>',a);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        console.log('>>>c>>>',c);
+        var d = R * c;
+        console.log('>>>d>>>',d);
+        
+    }
+    </script>
+    <apex:form > 
+        <input type="button" value="start" onclick="generateStartLocation()" />
+        <input type="button" value="stop" onclick="generateStopLocation()" />
+        <input type="button" value="TotalDistance" onclick="totalDistance()" />
+        <br/><br/>
+        
+    </apex:form>
+</apex:page>

@@ -1,0 +1,8 @@
+<apex:page controller="Checkbox_Class">
+
+	<div>
+		<h1>This is the Managed Package page</h1>
+	</div>
+	<a href="{!customPageURL}" >Click</a>
+	
+</apex:page>

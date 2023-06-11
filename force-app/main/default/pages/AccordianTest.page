@@ -1,0 +1,51 @@
+<apex:page showHeader="false" sidebar="false">
+    <script>
+    var i = 1;
+    var nextClickPages = 0;
+    var totalPages =19;
+    var startIndex = 0;
+    function createPage(){
+        var val ='';
+        if(nextClickPages <=totalPages){
+            nextClickPages += 4;
+        }
+        else{
+            nextClickPages = totalPages;
+        }
+        
+        if(i>=4){
+            val += '<input type ="button" value="prev" onclick="prevButton()"/>';
+        }
+        startIndex = i;
+        for(i ; i <= nextClickPages  ; i++){
+            if(i<=totalPages){
+                val += '<input type="button" value="'+i+'" />';
+            }
+        }
+        if(i <= totalPages){
+            val += '<input type ="button" value="next" onclick ="createPage()"/>';
+        }
+        document.getElementById("btn").innerHTML =val;
+    }
+    
+    function prevButton(){
+        var val = '';
+        nextClickPages -= 4;
+        startIndex -=4
+        if(startIndex>=4){
+            val += '<input type ="button" value="prev" onclick="prevButton()"/>';
+        }
+        for(startIndex ;startIndex<=nextClickPages ;startIndex++){
+            val += '<input type="button" value="'+startIndex+'" />';
+        }
+        val +='<input type ="button" value="next" onclick ="createPage()"/>';
+        document.getElementById("btn").innerHTML =val;
+        i = startIndex;
+        startIndex -= 4;
+    }
+    window.onload = createPage;
+    </script>
+    <div id="btn">
+        
+    </div>
+</apex:page>

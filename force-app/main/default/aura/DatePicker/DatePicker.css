@@ -1,0 +1,39 @@
+.THIS .slds-text-heading_large{
+    font-weight: 600;
+}
+.THIS .slds-text-heading_medium{
+    font-weight: 400;
+}
+.THIS .setDateLabel {
+    padding: 0px 68px 0px 0px;
+    font-weight: 600;
+}
+.THIS .fixDatePicker{
+    
+}
+.THIS .btnFix{
+    width: 32%;
+    border-radius: 15px; 
+    text-align: none;
+    background-color: royalblue!important;
+}
+.THIS .selectList {
+    border-radius: 3px;
+    width: 100%;
+    padding: 5px 0px 5px 0px;
+}
+.THIS h1{
+    font-size: 21px;
+    font-weight: 500;
+}
+.THIS h2{
+    font-size: 16px;
+    font-weight: 500;
+}
+.THIS .slds-hyphenate{
+    font-size: 32px;
+    font-weight: 600;
+}
+.THIS .selectListFix{
+    padding: 0px 7px 0 7px;
+}

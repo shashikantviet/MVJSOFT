@@ -1,0 +1,18 @@
+<apex:page sidebar="false" showHeader="false" docType="HTML-5.0">
+    <style>
+        .topBox{background:#262d33; color:#fff!important;}
+        .mContainer{max-width:1140px;}
+        .mBox{border:0px solid #444; max-width:1140px;} 
+    
+    </style>
+    <apex:slds />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <apex:form >
+        <div class="slds-p-vertical_x2-large topBox">
+            <div class="slds-grid slds-wrap slds-container_center mBox">
+            </div>
+            
+        </div>
+    </apex:form>
+    
+</apex:page>

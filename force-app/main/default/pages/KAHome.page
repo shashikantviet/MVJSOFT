@@ -1,0 +1,5 @@
+<apex:page sidebar="false" showHeader="false">
+    <apex:form >
+        <apex:inputTextarea html-placeholder="Enter the comment"></apex:inputTextarea>
+    </apex:form>   
+</apex:page>

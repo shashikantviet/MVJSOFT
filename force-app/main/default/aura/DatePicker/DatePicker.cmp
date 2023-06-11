@@ -1,0 +1,134 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+    <aura:attribute name="defaultDateValue" type="String" />
+    <aura:attribute name="isNextStep" type="Boolean"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds-text-align_center">
+        <div class="slds-text-heading_large">
+            Select a move in date?
+        </div>
+        <div class="slds-text-heading_medium">
+            you can select your Ideal date
+        </div>
+        <br/><br/>
+        <div >
+            <lightning:input type="date" name="input5"  displayDatePicker="true" label="MOVE IN DATE" required="true" value="{!v.defaultDateValue}" />
+        </div>
+        <br /><br />
+        <div>
+            <button class="slds-button slds-button_icon slds-button_icon-brand btnFix" onclick="{!c.detailInformation}">
+                <span>Next level</span>
+                <img src="{!$Resource.leftArrow}" />
+            </button>
+        </div>
+        <aura:if isTrue="{!v.isNextStep}">
+        	<div class="demo-only" style="height: 640px;">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeModelWindow}">
+                        <lightning:icon iconName="utility:close" size="x-small" alternativeText="sss"/>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Personal Information</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div>
+                        <div>
+                            <h1>
+                                Personal Information
+                            </h1>
+                        </div>
+                        <div>
+                            <h2>
+                                Tell us few things about yourself
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-form-element slds-size_1-of-3 slds-box_x-small slds-text-align_left ">
+                            <label class="slds-form-element__label" for="text-input-id-1">FIRST NAME</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" id="text-input-id-1" class="slds-input" placeholder="Placeholder Text" />
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-size_1-of-3 slds-box_x-small slds-text-align_left ">
+                            <label class="slds-form-element__label" for="text-input-id-1">MIDDLE NAME(OPTIONAL)</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" id="text-input-id-1" class="slds-input" placeholder="Placeholder Text" />
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-size_1-of-3 slds-box_x-small slds-text-align_left ">
+                            <label class="slds-form-element__label" for="text-input-id-1">LAST NAME</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" id="text-input-id-1" class="slds-input" placeholder="Placeholder Text" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="selectListFix">
+                        <label class="slds-form-element__label" for="text-input-id-1">COUNTRY</label>
+                        <select class="selectList" name="test">
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                            <option>Option 3</option>
+                        </select>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-form-element slds-size_1-of-2 slds-box_x-small slds-text-align_left ">
+                            <label class="slds-form-element__label" for="text-input-id-1">STREET ADDRESS</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" id="text-input-id-1" class="slds-input" placeholder="Placeholder Text" />
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-size_1-of-2 slds-box_x-small slds-text-align_left ">
+                            <label class="slds-form-element__label" for="text-input-id-1">STREET ADDRESS LINE 2(OPTIONAL)</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" id="text-input-id-1" class="slds-input" placeholder="Placeholder Text" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-form-element slds-size_1-of-3 slds-box_x-small slds-text-align_left">
+                            <label class="slds-form-element__label" for="text-input-id-1">CITY</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" id="text-input-id-1" class="slds-input" placeholder="Placeholder Text" />
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-size_1-of-3 slds-box_x-small slds-text-align_left ">
+                            <label class="slds-form-element__label" for="text-input-id-1">STATE/REGION(OPTIONAL)</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" id="text-input-id-1" class="slds-input" placeholder="Placeholder Text" />
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-size_1-of-3 slds-box_x-small slds-text-align_left ">
+                            <label class="slds-form-element__label" for="text-input-id-1">ZIP CODE</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" id="text-input-id-1" class="slds-input" placeholder="Placeholder Text" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-form-element slds-size_1-of-2 slds-box_x-small slds-text-align_left ">
+                            <label class="slds-form-element__label" for="text-input-id-1">PHONE</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" id="text-input-id-1" class="slds-input" placeholder="Placeholder Text" />
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-size_1-of-2 slds-box_x-small slds-text-align_left ">
+                            <label class="slds-form-element__label" for="text-input-id-1">EMAIL</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" id="text-input-id-1" class="slds-input" placeholder="Placeholder Text" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_brand" onclick="{!c.closeModelWindow}">Get Back</button>
+                    <!--<button class="slds-button slds-button_brand" >Save</button>-->
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+        </aura:if>
+    </div>
+</aura:component>

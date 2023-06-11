@@ -1,0 +1,41 @@
+<apex:page controller="AccordianController" sidebar="false" showHeader="false">
+    <apex:slds />
+    <style>
+        .accordion {
+        	width:100%;
+        	text-align:left;
+        }
+        .panel {
+        padding: 0 18px;
+        background-color: white;
+        }
+    </style>
+    <script>
+    function accord(){
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+        console.log('===',acc.length);
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight){
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+        acc[0].click();
+    }
+    window.onload = accord;
+    </script>
+    <form>
+        <apex:repeat value="{!lstOfRec}" var="rec">
+            <input type="button" class="accordion" value="{!rec['Title']}" onclick="accord();"/>
+            <div class="panel slds-hide">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+        </apex:repeat>
+    </form>
+</apex:page>

@@ -1,0 +1,56 @@
+<apex:page controller="testVFPageController">
+    <apex:slds />
+    <script>
+        function getRemoteAccount() {
+        
+    }
+
+    let setList = [];
+
+    for(let i = 0 ; i< '{!lstAccount}'.length ; i++ ){
+        console.log('"{!lstAccount}[i].Name"');
+        let sObject = {
+            Id:'{!lstAccount}[i].Id'
+            Name:'{!lstAccount}[i].Name',
+            Phone:'{!lstAccount}[i].Phone'
+        }
+        setList.push(sObject);
+        /*let obj = {
+            Id = 
+        };*/
+    }
+    </script>
+    <div>
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="SNO">SNO</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Account Name">Account Name</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Phone">Phone</div>
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!lstAccount}" var="lstAcc">
+                    <tr class="slds-hint-parent">
+                        <th data-label="Opportunity Name" scope="row">
+                            <div class="slds-truncate" title="SNO "> 1</div>
+                        </th>
+                        <td data-label="Account Name">
+                            <div class="slds-truncate" title="{!lstAcc.Name}">{!lstAcc.Name}</div>
+                        </td>
+                        <td data-label="Close Date">
+                            <div class="slds-truncate" title="{!lstAcc.Phone}">{!lstAcc.Phone}</div>
+                        </td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+    </div>
+</apex:page>

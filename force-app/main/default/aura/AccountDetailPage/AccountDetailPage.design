@@ -1,0 +1,4 @@
+<design:component >
+    <design:attribute name="ObjName" label="Enter ObjApiName" description="sObject Api Name"/>
+    <design:attribute name="fieldSetName" label="Enter FieldSet" description="FieldSet Api name"/>
+</design:component>

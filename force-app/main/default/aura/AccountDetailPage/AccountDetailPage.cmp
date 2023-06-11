@@ -1,0 +1,37 @@
+<aura:component controller="AccDetailPageCon" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="ObjName" type="String" />
+    <aura:attribute name="fieldSetName" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="listFieldset" Description="fieldset" type="Object[]" />
+    
+    <aura:attribute name="objRec" type="Object" />
+    
+    <aura:attribute name="edit" type="boolean" access="public" default="false"/>
+    
+    <div class="container">
+        <div class="slds-wrap slds-grid">
+            
+            <aura:iteration items="{!v.listFieldset}" var="field">
+                
+                <c:FieldSetContentDisplay objectName="{!v.ObjName}" objRecVal="{!v.objRec}" isEditFields="{!v.edit}" 
+                                          fieldLabel="{!field.label}" fieldAPI="{!field.fieldPath}" fieldType="{!field.type}"/>
+                <!--<lightning:icon iconName="utility:edit" size="x-small" onclick="{!c.edit}" />-->
+            </aura:iteration>
+        </div><br/>
+        
+        
+        <aura:if isTrue="{!!v.edit}">
+            <!--<lightning:button class="slds-align_absolute-center" variant="brand" label="Edit" onclick="{!c.edit}" />-->
+            <button class="slds-align_absolute-center slds-button slds-button_brand" onclick="{!c.edit}">
+                Edit
+                <lightning:icon class="fillIconColor" iconName="utility:edit" size="xx-small" style="padding: 2px 0px 2px 10px;"/>
+            </button>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.edit}">
+            <lightning:button variant="brand" label="Save" onclick="{!c.save}"/>
+            
+            <lightning:button variant="brand" label="Cancel" onclick="{!c.cancel}"/>
+        </aura:if>
+    </div>
+</aura:component>

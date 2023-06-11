@@ -1,0 +1,242 @@
+<aura:component controller="TransactionRoleRec" implements="flexipage:availableForAllPageTypes">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="demo" type="String" />
+    <aura:attribute name="transactionDeatil" type="List" />
+    <aura:attribute name="filterDatas" type="List" />
+    <aura:attribute name="lstOfWrap" type="List" />
+    <aura:attribute type="Boolean" name="sortAsc" />
+    <aura:attribute type="String" name="sortField" />
+    <aura:attribute type="String" name="sortDir" />
+    <aura:attribute name="isEdit" type="Boolean" />
+    <aura:attribute name="isCreate" type="Boolean"/>
+    <aura:attribute name="record" type="Object" />
+    <aura:attribute name="pickLIst" type="List" />
+    <aura:attribute name="newRecods" type="Sobject" default ="{'sobjectType': 'Transaction_Role__c',
+                                                              'Name': '',
+                                                              'Role__c': 'Co-Borrower',
+                                                              'Email__c': '',
+                                                              'Phone__c' : ''}"/>
+    <div class="slds-box slds-card">
+        <div class="slds-p-bottom_x-large slds-grid">
+            <div class="slds-col slds-size_1-of-12">
+                <lightning:icon iconName="{!'standard:'+v.demo}" ></lightning:icon>
+            </div>
+            <div class="slds-text-heading_large">
+                {!v.demo}
+            </div>
+            <div class="setBrandButton">
+                <input type="button" class="slds-button slds-button_brand" value="Create" onclick="{!c.createRec}"/>
+            </div>
+        </div>
+        
+        <aura:if isTrue="{!v.isCreate}">
+            <div class="demo-only" style="height: 640px;">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create New Records</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="text-input-id-1">TRANSACTION NAME</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText label="Name" aura:id="Name" placeholder="Name" value="{!v.newRecods.Name}" />
+                                    <!-- <input type="text" aura:id="Name" class="slds-input" placeholder="Name" value="{!v.newRecods.Name}" />-->
+                                </div>
+                            </div>
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control">
+                                    <lightning:select aura:id="Role__c"
+                                                      name="picklistSelect"
+                                                      label="Role"
+                                                      value="{!v.newRecods.Role__c}">
+                                        
+                                        <aura:iteration var="opt" items="{!v.pickLIst}">
+                                            <option value="{!opt}">{!opt}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>                                        
+                            </div>
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="text-input-id-1">Email</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText  aura:id="Email__c" placeholder="Email" value="{!v.newRecods.Email__c}" />
+                                    <!--<input type="text" aura:id="Email__c" class="slds-input" placeholder="Email" value="{!v.newRecods.Email__c}" />-->
+                                </div>
+                            </div>
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="text-input-id-1">Phone</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText  aura:id="Phone__c" placeholder="Phone" value="{!v.newRecods.Phone__c}" />
+                                    <!--<input type="text" aura:id="Phone__c" class="slds-input" placeholder="Phone" value="{!v.newRecods.Phone__c}" />-->
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral" onclick="{!c.closeWindow}">Cancel</button>
+                            <button class="slds-button slds-button_brand" onclick="{!c.createNewRec}">Create</button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+        </aura:if>
+        
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+            <thead>
+                <tr class="slds-text-title_caps">
+                    <th scope="col" width="22%">
+                        <div class="slds-grid">
+                            <a>
+                                <div onclick="{!c.showInputbox}">
+                                    <lightning:icon iconName="utility:search" size="X-small"/>
+                                </div>
+                            </a>
+                            <div class="slds-grid upDownicons">
+                                <div id="Name" class="slds-truncate" title="TRANSACTION NAME" onclick="{!c.doSorting}">TRANSACTION NAME</div>
+                                <div class="{!v.sortField == 'Name' ? ' ' : 'hide'}" aura:id="nameArrow"> 
+                                    <aura:if isTrue="{!v.sortAsc}">
+                                        <lightning:icon iconName="utility:arrowup" size="X-small"/>
+                                        <aura:set attribute="else">
+                                            <lightning:icon iconName="utility:arrowdown" size="X-small"/>
+                                        </aura:set>
+                                    </aura:if> 
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="slds-hide" aura:id="searchblock">
+                            <ui:inputText updateOn="keyup" aura:id="keyWord" keyup="{!c.searchKeyChange}" value="" placeholder="search.."/>
+                        </div>
+                    </th>
+                    <th id="Role__c" scope="col" onclick="{!c.doSorting}">
+                        <div class="slds-grid upDownicons">
+                            <div class="slds-truncate" title="ROLE">ROLE</div>
+                            <div class="{!v.sortField == 'Role__c' ? ' ' : 'hide'}" aura:id="roleArrow"> 
+                                <aura:if isTrue="{!v.sortAsc}">
+                                    <lightning:icon iconName="utility:arrowup" size="X-small"/>
+                                    <aura:set attribute="else">
+                                        <lightning:icon iconName="utility:arrowdown" size="X-small"/>
+                                    </aura:set>
+                                </aura:if> 
+                            </div>
+                        </div>
+                    </th>
+                    <th id="Email__c" scope="col" onclick="{!c.doSorting}">
+                        <div class="slds-grid upDownicons">
+                            <div class="slds-truncate" title="EMAIL">EMAIL</div>
+                            <div class="{!v.sortField == 'Email__c' ? ' ' : 'hide'}" aura:id="emailArrow"> 
+                                <aura:if isTrue="{!v.sortAsc}">
+                                    <lightning:icon iconName="utility:arrowup" size="X-small"/>
+                                    <aura:set attribute="else">
+                                        <lightning:icon iconName="utility:arrowdown" size="X-small"/>
+                                    </aura:set>
+                                </aura:if>
+                            </div>
+                        </div>
+                    </th>
+                    <th id="Phone__c" scope="col" onclick="{!c.doSorting}">
+                        <div class="slds-grid upDownicons">
+                            <div class="slds-truncate" title="PHONE">PHONE</div>
+                            <div class="{!v.sortField == 'Phone__c' ? ' ' : 'hide'}" aura:id="phoneArrow"> 
+                                <aura:if isTrue="{!v.sortAsc}">
+                                    <lightning:icon iconName="utility:arrowup" size="X-small"/>
+                                    <aura:set attribute="else">
+                                        <lightning:icon iconName="utility:arrowdown" size="X-small"/>
+                                    </aura:set>
+                                </aura:if> 
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration var="transDeatil" items="{!v.transactionDeatil}" indexVar="indx">
+                    
+                    <tr class="hoverWrapper">
+                        <th scope="row" data-label="Opportunity Name" class="slds-grid">
+                            <div class="slds-icon_small " id="icons">
+                                <a>
+                                    <span id="{!transDeatil.Id}" onclick="{!c.delRec}">
+                                        <lightning:icon iconName="utility:delete" size="xx-small" />
+                                    </span>
+                                </a>
+                                <a><span id="{!indx}" onclick="{!c.editRec}">
+                                    <lightning:icon iconName="utility:edit" size="xx-small" class="setIcon"/>
+                                    </span></a>
+                            </div>
+                            <div class="slds-truncate headerSet" title="Cloudhub"><a href="{! '#/sObject/' + transDeatil.Id + '/view'}">{!transDeatil.Name}</a></div>
+                            
+                        </th>
+                        <aura:iteration var="fieldInfo" items ="{!v.lstOfWrap}">
+                            <td data-label="{!fieldInfo.fieldPath}">
+                                <c:showAllFieldInfo fieldType="{!fieldInfo.type}" objRec="{!transDeatil}" fieldApi="{!fieldInfo.fieldPath}"/>
+                            </td>
+                        </aura:iteration>
+                        <!--<td data-label="Account Name">
+                            <div class="slds-truncate" title="Cloudhub">{!transDeatil.Role__c}</div>
+                        </td>
+                        <td data-label="Close Date">
+                            <div class="slds-truncate" title="4/14/2015">{!transDeatil.Email__c}</div>
+                        </td>
+                        <td data-label="Prospecting">
+                            <div class="slds-truncate" title="Prospecting">{!transDeatil.Phone__c}</div>
+                        </td>-->
+                    </tr>
+                    
+                    
+                </aura:iteration>
+                <aura:if isTrue="{!v.isEdit}">
+                    <div class="demo-only" style="height: 640px;">
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Modal Edit</h2>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label" for="text-input-id-1">TRANSACTION NAME</label>
+                                        <div class="slds-form-element__control">
+                                            <input type="text" id="Name" class="slds-input" placeholder="Name" value="{!v.record.Name}" onchange="{!c.updateField}"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <lightning:select aura:id="Role__c"
+                                                              name="picklistSelect"
+                                                              label="Role"
+                                                              value="{!v.record.Role__c}"
+                                                              onchange="{!c.updateField}">
+                                                
+                                                <aura:iteration var="opt" items="{!v.pickLIst}">
+                                                    <option value="{!opt}">{!opt}</option>
+                                                </aura:iteration>
+                                            </lightning:select>
+                                        </div>                                        
+                                    </div>
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label" for="text-input-id-1">Email</label>
+                                        <div class="slds-form-element__control">
+                                            <input type="text" id="Email__c" class="slds-input" placeholder="Email" value="{!v.record.Email__c}" onchange="{!c.updateField}"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label" for="text-input-id-1">Phone</label>
+                                        <div class="slds-form-element__control">
+                                            <input type="text" id="Phone__c" class="slds-input" placeholder="Phone" value="{!v.record.Phone__c}" onchange="{!c.updateField}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <footer class="slds-modal__footer">
+                                    <button class="slds-button slds-button_neutral" onclick="{!c.closeWindow}">Cancel</button>
+                                    <button class="slds-button slds-button_brand" onclick="{!c.updateRec}">Update</button>
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </div>
+                </aura:if>
+            </tbody>
+        </table>
+    </div>
+</aura:component>
